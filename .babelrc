@@ -3,6 +3,10 @@
         ["@babel/preset-env",{
             //最新版 已经不用在入口文件 import "@babel/polyfill";需要安装npm i --save core-js@3
             //使用useBuiltIns会让你不是整体引入所有需要polyfill的语法，而是按需加载，减少打包的体积
+            "targets": {
+                "chrome": "58",
+                "ie": "11"
+              },
             "useBuiltIns":"usage",
             "corejs": 3, //新版本需要写这个
         }]

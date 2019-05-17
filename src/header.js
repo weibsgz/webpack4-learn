@@ -1,3 +1,3 @@
-// export default function Header() {
-//     console.log('this.is header')
-// }
+export default function Header() {
+    console.log('this.is header')
+}
