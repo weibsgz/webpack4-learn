@@ -44,14 +44,14 @@ const devConfig = {
     optimization: {
         // package.json需要加入"sideEffects": false, 代表所有引入（css,polyfill）这些都不要瑶树给摇掉，因为他们都没有导出
         usedExports: true, //开启treeShaking 只在development有效
-        minimizer: [         
-          new UglifyJsPlugin({
-            sourceMap: true,
-            uglifyOptions: {
-              ie8: true,
-            }
-          })
-        ]
+        // minimizer: [         
+        //   new UglifyJsPlugin({
+        //     sourceMap: true,
+        //     uglifyOptions: {
+        //       ie8: true,
+        //     }
+        //   })
+        // ]
       }
 }
 

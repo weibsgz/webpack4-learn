@@ -10,5 +10,6 @@
             "useBuiltIns":"usage",
             "corejs": 3, //新版本需要写这个
         }]
-    ]
+    ],
+    "plugins": ["@babel/plugin-syntax-dynamic-import"] //为了动态引入import
 }

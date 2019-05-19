@@ -9,8 +9,6 @@ var obj = document.getElementById('img')
 obj.appendChild(o)
 
 
-
-
 new Header();
 console.log('index.js')
 
