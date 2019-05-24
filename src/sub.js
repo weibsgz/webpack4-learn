@@ -1,5 +1,5 @@
 //同步引入lodash
-// import _ from 'lodash'
+import _ from 'lodash'
 import $ from 'jquery'
 
 console.log(_.join(['a','b','c'],'***'))
@@ -19,6 +19,20 @@ document.addEventListener('click',() => {
         document.body.appendChild(element)
     })
 },false);
+
+
+//异步引入组件方式  optimization:{splitChunks:{
+ //   chunks: async  默认是异步 
+//}}
+// 这种异步组件点击时候再加载 有可能遇到网络问题会慢
+// 用prefetch方式 可以在网络资源空闲时去加载  会等主流程完毕再加载 这个CLICK.js 
+// preload会和主流程一起加载
+document.addEventListener('click',() => {
+   import(/* webpackPrefetch: true */'./click.js').then(({default:func})=>{
+       func()
+   })
+},false);
+
 
 
 $(document).on('click',function() {

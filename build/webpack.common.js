@@ -10,7 +10,7 @@ module.exports = {
     },
     output:{
         //publicPath:'/',//使用express需要所有输出的的静态资源 前边加根路径
-        filename: '[name].js',
+        
         path: path.resolve(__dirname,'../dist'),
         // publicPath: 'http://asserts.xcarimg.com/resource', //加入CDN的域名
     },
@@ -37,26 +37,7 @@ module.exports = {
               name: 'static/fonts/[name].[hash:7].[ext]'
             }
            },
-          {
-            test: /\.css$/,
-            use: ['style-loader', 'css-loader', 'postcss-loader'],//loader顺序从下到上，从右到左
-          },
-          {
-            test: /\.scss$/,
-            use: [
-                "style-loader", // creates style nodes from JS strings
-                {
-                    loader: 'css-loader',
-                    options: {
-                      importLoaders: 2, //比如一个SASS文件，内部又import了一个B.scss文件，那么为了让B.scss文件也先走postcss 和 sass-loader
-                      modules:true, //默认是false 代表当前页面import 的css只作用于当前页面
-                    },
-                  },
-                "sass-loader",
-                "postcss-loader"
-                  ]
-            },
-            { 
+           { 
                 test: /\.js$/, 
                 exclude: /node_modules/, 
                 loader: "babel-loader" ,
@@ -98,6 +79,13 @@ module.exports = {
         new CleanWebpackPlugin(),
     ],
     optimization:{
+
+
+         // package.json需要加入"sideEffects": false, 代表所有引入（css,polyfill）这些都不要瑶树给摇掉，因为他们都没有导出
+        //后来改成"sideEffects": ["*.css"]  因为CSS也没有导出 别给摇掉了
+        usedExports: true, //开启treeShaking 只在development有效  
+
+
         //代码分割本质和WEBPACK无关，可通过单独一个JS文件引入库文件
         //比如lodash window._ = _挂在到window                    
         //1.同步代码分割（直接import）只要在此配置optimization即可
@@ -129,8 +117,17 @@ module.exports = {
               //设置了这个属性，a被打包到common.js b可能之前被单独打包过了
               //就不会再跟着a被打包到common.js
               //filename:'common.js'
-            }
+            },
+            //多入口 多 CSS 统一打包到一个STYLES。css
+            // styles: {
+            //   name: 'styles',
+            //   test: /\.css$/,
+            //   chunks: 'all',
+            //   enforce: true,
+            // }
+
+            //也可以多入口 根据每个入口单独打包CSS 参考文档https://webpack.js.org/plugins/mini-css-extract-plugin
           }
-        }
+        }         
     }
 }
