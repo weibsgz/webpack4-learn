@@ -9,6 +9,7 @@ require('core-js/features/promise')
 import Header from './header.js'
 import test from './test.png'
 import './index.css'
+import {getComponent} from './sub.js'
 
 var o = new Image()
 o.src = test;
@@ -26,3 +27,9 @@ let a = [1,2,3];
 a.map((item)=>{
     console.log(item)
 })
+
+document.addEventListener('click',() => {
+    getComponent().then(element=>{
+        document.body.appendChild(element)
+    })
+},false);

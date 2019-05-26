@@ -5,7 +5,8 @@ import $ from 'jquery'
 console.log(_.join(['a','b','c'],'***'))
 // 异步引入
 // 用这种异步import方式需要安装
-function getComponent() {
+export function getComponent() {
+    console.log('this is sub1')
     //如果不指定webpackChunkName，那么打包出来的就是0.JS 这种
     return import(/* webpackChunkName:"lodash" */'lodash').then(({default:_})=>{
         var element = document.createElement('div');
@@ -14,11 +15,7 @@ function getComponent() {
     })
 }
 
-document.addEventListener('click',() => {
-    getComponent().then(element=>{
-        document.body.appendChild(element)
-    })
-},false);
+
 
 
 //异步引入组件方式  optimization:{splitChunks:{
@@ -32,11 +29,3 @@ document.addEventListener('click',() => {
        func()
    })
 },false);
-
-
-
-$(document).on('click',function() {
-    console.log('jquery is here')
-})
-
-console.log('this is sub1')

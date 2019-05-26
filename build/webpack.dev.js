@@ -22,7 +22,20 @@ const devConfig = {
         contentBase: path.join(__dirname, 'dist'), //再哪个文件夹下启动服务
         open:true,
         hot:true,
-        port: 8090
+        port: 8765,
+         proxy: {
+              '/api': {
+                target: 'https://www.yourwebsite.com.cn', //主域名
+                secure: false, //如果转发地址是https的 需要配置
+                //如果真实路径是result.json 但是后端说开发阶段假数据只能用
+                //demo.json 可如此配置请求是demo.json
+                //注意，一旦上线需要将下边注释掉
+                pathRewrite: {'result.json' : 'demo.json'},
+                //改变服务器的origin 限制 开发阶段最好配上
+                //上线了还是需要服务的origin allow
+                changeOrigin: true
+              }
+            }
     },
     module:{
         rules:[
